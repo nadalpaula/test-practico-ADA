@@ -26,12 +26,16 @@ class Detalle extends Component{
 
 render(){
 	return(
-		{this.state.producto > 0&&
-			<React.Fragment>
-				return(
-					<NavBar />
-
-					)
+		<div main-container>
+		<NavBar />
+		{this.state.producto.item &&
+			<img className='image' src={this.state.producto.item.picture}/>
+          <p className='condition'> {this.state.producto.item.condition}</p>
+          <p>{this.state.producto.item.quantity}</p>
+          <p className='title-txt'>{this.state.producto.item.title}</p>
+          <p className='price-txt'>{this.state.producto.item.price}</p>
+          <button>Comprar</button>
+          <p className='description'>{this.state.producto.description.plain_text}</p>   
 			}	
 		)
 	}
