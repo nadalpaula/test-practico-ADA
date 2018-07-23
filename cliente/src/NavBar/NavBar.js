@@ -33,7 +33,7 @@ clickMe(e) {
 render() {
     const url = "/items?search=" + this.state.textValue
 	return (
-        <div class="nav-container">
+        <div className="nav-container">
             <img src= "../../imagenes/Logo_ML.png" />
             <input 
                 value={this.state.textValue} 

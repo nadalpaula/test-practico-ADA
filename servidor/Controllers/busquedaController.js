@@ -2,8 +2,8 @@ let self = {}
 const busquedaService = require('../Services/busquedaService')
 
 self.productos = function(req, res) {
-  const query = req.query['search']
-  console.log(111, req.query)
+  const query = req.query['q']
+  //console.log(111, req.query)
   console.log(query)
   const resultado = busquedaService.getInfoApi(query).then(function(data) {
   let autor = {
@@ -15,7 +15,7 @@ self.productos = function(req, res) {
   let categorias = []
 
   let category = data.filters[0].values[0].path_from_root
-  console.log(111, category)
+  //console.log(111, category)
   for (var i = 0; i < category.length; i++) {
       categorias.push(category[i].name)
   }
@@ -26,7 +26,7 @@ self.productos = function(req, res) {
     let price = data.results[i].price
     let arrDecimal = price.toString().split('.');
 
-    console.log(arrDecimal)
+    //console.log(arrDecimal)
     //let arrNum = parseInt(arrDecimal)
     //console.log(arrNum)
       

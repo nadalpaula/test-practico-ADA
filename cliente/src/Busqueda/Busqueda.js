@@ -16,11 +16,11 @@ class Busqueda extends Component {
 
   componentDidMount() {
     let id = queryString.parse(this.props.location.search);
-    fetch('http://localhost:3000/api/items?q=' + id.search).then((result) => { 
+    fetch('http://localhost:3001/api/items?q=' + id.search).then((result) => { 
      return result.json()
-    }).then((result) => {
+    }).then((resultado) => {
       this.setState({
-        products: result,
+        products: resultado,
         searchId: id
       })
     })
@@ -32,16 +32,17 @@ class Busqueda extends Component {
     if(newId !== this.state.searchId) {      
       fetch('http://localhost:3000/api/items?q=' + newId).then((result) => { 
         return result.json()
-      }).then((result) => {     
+      }).then((resultado) => {     
         this.setState({
-          products: result,
+          products: resultado,
           searchId: newId 
         })        
       })
     }
   }
 
-  render(){    
+  render(){ 
+  console.log(this.state)   
     return (
       <div>
         <NavBar />
