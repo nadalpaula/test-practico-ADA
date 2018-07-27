@@ -2,33 +2,20 @@ let self = {}
 const busquedaService = require('../Services/busquedaService')
 
 self.productos = function(req, res) {
-  const query = req.query['q']
-  //console.log(111, req.query)
-  console.log(query)
-  const resultado = busquedaService.getInfoApi(query).then(function(data) {
+  const query = req.query.q
+  busquedaService.getInfoApi(query).then(function(data) {
   let autor = {
       "author": {
         "name": "Paula",
         "lastname" : "Nadal"
       }
     }
-  let categorias = []
-
-  let category = data.filters[0].values[0].path_from_root
-  //console.log(111, category)
-  for (var i = 0; i < category.length; i++) {
-      categorias.push(category[i].name)
-  }
   
   let cuatro = []
 
   for (var i = 0; i < data.results.length; i++) {
     let price = data.results[i].price
     let arrDecimal = price.toString().split('.');
-
-    //console.log(arrDecimal)
-    //let arrNum = parseInt(arrDecimal)
-    //console.log(arrNum)
       
       let producto = {
           //categories: [],
@@ -49,25 +36,29 @@ self.productos = function(req, res) {
             //console.log(cuatro)
             //console.log(333, categorias)
         }
+
+      let categorias = []
+
+      if (data.filters.length > 0) {
+      let path = data.filters[0].values[0].path_from_root
+      for (var i = 0; i < path.length; i++) {
+          categorias.push(path[i].name)
+    }
+     } else {
+      let availablePath = data.available_filters[0].values
+      for (var i = availablePath.length - 1; i >= 0; i--) {
+        categorias.push(availablePath[i].name)
+      }
+     }
   
   let compileProduct = [{
     autor: autor,
     categorias: categorias,
-    cuatro: cuatro
+    items: cuatro
   }]
-        //aca se hace 
+  
+        return res.json(compileProduct)
 
-        /*const cat = busquedaService.getCathegory(query).then(function(data){
-                
-                for (var i = 0; i < data.categories.path_from_root.length; i++){
-                    let categoria = {
-                        id: data.categories.path_from_root[i].id,
-                        nombre: data.categories.path_from_root[i].name
-                    }
-                }
-                console.log(cat)
-            })*/
-            return res.json(compileProduct)
     }).catch(function(err) {
         console.log(err);
     });

@@ -1,10 +1,12 @@
-const restler = require('restler')
 let self = {}
+const rest = require('restler')
+
 
 self.getInfoApi = function(query) {
 const apiData = new Promise (function (resolve, reject){
-	restler.get('https://api.mercadolibre.com/sites/MLA/search?q=:' + query + '&limit=4' ).on('complete', function (result){
+	rest.get('https://api.mercadolibre.com/sites/MLA/search?q=' + query + '&limit=4' ).on('complete', function (result){
 		resolve(result)	
+		
 })
 })
 return apiData
